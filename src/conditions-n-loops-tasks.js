@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                             *
@@ -394,23 +393,31 @@ function getSpiralMatrix(size) {
 function rotateMatrix(matrix) {
   const n = matrix.length;
 
+  const rotatedMatrix = [];
+  for (let i = 0; i < n; i += 1) {
+    rotatedMatrix[i] = [];
+    for (let j = 0; j < n; j += 1) {
+      rotatedMatrix[i][j] = matrix[i][j];
+    }
+  }
+
   for (let i = 0; i < n; i += 1) {
     for (let j = i + 1; j < n; j += 1) {
-      const temp = matrix[i][j];
-      matrix[i][j] = matrix[j][i];
-      matrix[j][i] = temp;
+      const temp = rotatedMatrix[i][j];
+      rotatedMatrix[i][j] = rotatedMatrix[j][i];
+      rotatedMatrix[j][i] = temp;
     }
   }
 
   for (let i = 0; i < n; i += 1) {
     for (let j = 0; j < n / 2; j += 1) {
-      const temp = matrix[i][j];
-      matrix[i][j] = matrix[i][n - j - 1];
-      matrix[i][n - j - 1] = temp;
+      const temp = rotatedMatrix[i][j];
+      rotatedMatrix[i][j] = rotatedMatrix[i][n - j - 1];
+      rotatedMatrix[i][n - j - 1] = temp;
     }
   }
 
-  return matrix;
+  return rotatedMatrix;
 }
 
 /**
@@ -430,19 +437,24 @@ function rotateMatrix(matrix) {
 function sortByAsc(arr) {
   const n = arr.length;
 
+  const sortedArr = new Array(n);
+  for (let i = 0; i < n; i += 1) {
+    sortedArr[i] = arr[i];
+  }
+
   for (let i = 1; i < n; i += 1) {
-    const key = arr[i];
+    const key = sortedArr[i];
     let j = i - 1;
 
-    while (j >= 0 && arr[j] > key) {
-      arr[j + 1] = arr[j];
+    while (j >= 0 && sortedArr[j] > key) {
+      sortedArr[j + 1] = sortedArr[j];
       j -= 1;
     }
 
-    arr[j + 1] = key;
+    sortedArr[j + 1] = key;
   }
 
-  return arr;
+  return sortedArr;
 }
 
 /**
