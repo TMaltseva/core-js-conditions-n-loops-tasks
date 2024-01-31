@@ -392,33 +392,36 @@ function getSpiralMatrix(size) {
  */
 function rotateMatrix(matrix) {
   const n = matrix.length;
+  const referenceMatrix = matrix;
 
-  const rotatedMatrix = [];
   for (let i = 0; i < n; i += 1) {
-    rotatedMatrix[i] = [];
-    for (let j = 0; j < n; j += 1) {
-      rotatedMatrix[i][j] = matrix[i][j];
+    for (let j = 0; j < i; j += 1) {
+      const temp = referenceMatrix[i][j];
+      referenceMatrix[i][j] = referenceMatrix[j][i];
+      referenceMatrix[j][i] = temp;
     }
   }
 
   for (let i = 0; i < n; i += 1) {
-    for (let j = i + 1; j < n; j += 1) {
-      const temp = rotatedMatrix[i][j];
-      rotatedMatrix[i][j] = rotatedMatrix[j][i];
-      rotatedMatrix[j][i] = temp;
+    for (let j = 0; j < Math.floor(n / 2); j += 1) {
+      const temp = referenceMatrix[i][j];
+      referenceMatrix[i][j] = referenceMatrix[i][n - j - 1];
+      referenceMatrix[i][n - j - 1] = temp;
     }
   }
 
-  for (let i = 0; i < n; i += 1) {
-    for (let j = 0; j < n / 2; j += 1) {
-      const temp = rotatedMatrix[i][j];
-      rotatedMatrix[i][j] = rotatedMatrix[i][n - j - 1];
-      rotatedMatrix[i][n - j - 1] = temp;
-    }
-  }
-
-  return rotatedMatrix;
+  return matrix;
 }
+
+// const inputMatrix = [
+//   [1, 2, 3],
+//   [4, 5, 6],
+//   [7, 8, 9]
+// ];
+
+// const rotatedMatrix = rotateMatrix(inputMatrix);
+
+// console.log(rotatedMatrix);
 
 /**
  * Sorts an array of numbers in ascending order in place.
@@ -435,26 +438,19 @@ function rotateMatrix(matrix) {
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
 function sortByAsc(arr) {
-  const n = arr.length;
-
-  const sortedArr = new Array(n);
-  for (let i = 0; i < n; i += 1) {
-    sortedArr[i] = arr[i];
-  }
-
-  for (let i = 1; i < n; i += 1) {
-    const key = sortedArr[i];
-    let j = i - 1;
-
-    while (j >= 0 && sortedArr[j] > key) {
-      sortedArr[j + 1] = sortedArr[j];
-      j -= 1;
+  const len = arr.length;
+  const temp = arr;
+  for (let i = 0; i < len - 1; i += 1) {
+    for (let j = 0; j < len - 1 - i; j += 1) {
+      if (arr[j] > arr[j + 1]) {
+        const n = temp[j];
+        temp[j] = temp[j + 1];
+        temp[j + 1] = n;
+      }
     }
-
-    sortedArr[j + 1] = key;
   }
 
-  return sortedArr;
+  return arr;
 }
 
 /**
